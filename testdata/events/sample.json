@@ -1,0 +1,20 @@
+{
+  "events": [
+    {
+      "idempotency_key": "sample_1",
+      "source_system": "synthetic",
+      "source_id": "sample_1",
+      "schema_version": "1.0",
+      "occurred_at": "2026-06-15T15:00:00Z",
+      "account_external_id": "acct_sample",
+      "account_label": "Sample Example",
+      "amount_minor": 2200,
+      "currency": "USD",
+      "status": "approved",
+      "memo": "synthetic coffee",
+      "merchant": {"external_id": "mer_cafe", "name": "Harbor Coffee", "category": "food", "country": "US"},
+      "device": {"external_id": "dev_sample"},
+      "location": {"country": "US", "region": "CA", "city": "Oakland"}
+    }
+  ]
+}

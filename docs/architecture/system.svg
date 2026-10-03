@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="220" viewBox="0 0 920 220">
+  <rect width="920" height="220" fill="#fbf6ee"/>
+  <g font-family="Georgia, serif" font-size="14" fill="#1c1712">
+    <rect x="16" y="70" width="120" height="64" fill="#efe6d6" stroke="#1c1712"/>
+    <text x="36" y="106">Browser</text>
+    <rect x="170" y="70" width="120" height="64" fill="#e5f2eb" stroke="#1c1712"/>
+    <text x="200" y="106">Go API</text>
+    <rect x="324" y="70" width="140" height="64" fill="#efe6d6" stroke="#1c1712"/>
+    <text x="348" y="98">PostgreSQL</text>
+    <text x="360" y="116">and jobs</text>
+    <rect x="498" y="40" width="150" height="48" fill="#f8ecd9" stroke="#1c1712"/>
+    <text x="530" y="68">Rule engine</text>
+    <rect x="498" y="120" width="150" height="48" fill="#f8ecd9" stroke="#1c1712"/>
+    <text x="518" y="148">Evidence package</text>
+    <rect x="682" y="70" width="210" height="64" fill="#e5f2eb" stroke="#1c1712"/>
+    <text x="700" y="98">Gemini or labeled stub</text>
+    <text x="730" y="116">then validator</text>
+  </g>
+  <g stroke="#1e5c45" fill="none" stroke-width="1.4">
+    <path d="M136 102 H170"/>
+    <path d="M290 102 H324"/>
+    <path d="M464 90 H498"/>
+    <path d="M464 140 H498"/>
+    <path d="M648 64 H760 V70"/>
+    <path d="M648 144 H760 V134"/>
+  </g>
+</svg>

@@ -1,0 +1,280 @@
+openapi: 3.0.3
+info:
+  title: FinGuard AI API
+  version: 1.0.0
+  description: |
+    Versioned investigation API. AI output is advisory. The API does not freeze
+    accounts, move money, or record a finding of guilt. Tenant identity comes
+    from the session, not from a client header.
+servers:
+  - url: /
+paths:
+  /healthz:
+    get:
+      summary: Liveness
+      responses:
+        "200":
+          description: Process is up
+  /readyz:
+    get:
+      summary: Readiness
+      responses:
+        "200":
+          description: Database is reachable
+        "503":
+          description: Database is not reachable
+  /api/v1/openapi.yaml:
+    get:
+      summary: This contract
+      responses:
+        "200":
+          description: OpenAPI document
+  /api/v1/auth/login:
+    post:
+      summary: Create a session
+      responses:
+        "200":
+          description: Session cookie set
+        "401":
+          description: Invalid credentials
+  /api/v1/auth/logout:
+    post:
+      summary: End the session
+      responses:
+        "200":
+          description: Logged out
+  /api/v1/auth/me:
+    get:
+      summary: Current principal
+      responses:
+        "200":
+          description: User
+        "401":
+          description: Unauthenticated
+  /api/v1/meta:
+    get:
+      summary: Product limitations and model mode
+      responses:
+        "200":
+          description: Meta
+  /api/v1/dashboard:
+    get:
+      summary: Queue counts and recent cases
+      responses:
+        "200":
+          description: Dashboard
+  /api/v1/events:
+    post:
+      summary: Ingest one synthetic event
+      responses:
+        "200":
+          description: Accepted or replayed
+        "409":
+          description: Idempotency conflict
+        "422":
+          description: Quarantined
+  /api/v1/events/batch:
+    post:
+      summary: Ingest up to 100 events
+      responses:
+        "200":
+          description: Per-event results
+  /api/v1/transactions:
+    get:
+      summary: Recent canonical transactions
+      responses:
+        "200":
+          description: Transactions
+  /api/v1/cases:
+    get:
+      summary: Case queue
+      parameters:
+        - in: query
+          name: status
+          schema: {type: string}
+        - in: query
+          name: cursor
+          schema: {type: string}
+        - in: query
+          name: limit
+          schema: {type: integer, maximum: 100}
+      responses:
+        "200":
+          description: Page of cases
+  /api/v1/cases/{id}:
+    get:
+      summary: Case, signals, transactions, and notes
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Case workspace
+        "404":
+          description: Not found in this tenant
+  /api/v1/cases/{id}/notes:
+    post:
+      summary: Append a note
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "201":
+          description: Note stored
+  /api/v1/cases/{id}/actions:
+    post:
+      summary: Authorized human transition
+      description: Requires the case version. Resolution means no adverse action.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Updated case
+        "409":
+          description: Version conflict
+  /api/v1/cases/{id}/evidence:
+    get:
+      summary: Immutable evidence records
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Evidence
+  /api/v1/cases/{id}/reports:
+    get:
+      summary: AI report history
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Reports
+    post:
+      summary: Draft an evidence-grounded report
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Ready, partial, failed, or rejected report
+  /api/v1/cases/{id}/knockouts:
+    get:
+      summary: Hypothetical replays that would clear or keep each signal
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Knockout desk
+  /api/v1/cases/{id}/dissent:
+    post:
+      summary: Narrate the knockout desk without adding facts
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Cited dissent or deterministic fallback
+  /api/v1/cases/{id}/graph:
+    get:
+      summary: Observed relationship graph
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Nodes and edges
+  /api/v1/cases/{id}/audit:
+    get:
+      summary: Append-only case audit
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Audit events
+  /api/v1/cases/{id}/assistant:
+    get:
+      summary: Retained assistant turns
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Messages
+    post:
+      summary: Ask a case-scoped question
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Answer or refusal
+  /api/v1/jobs/{id}/replay:
+    post:
+      summary: Requeue a dead job
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: {type: string}
+      responses:
+        "200":
+          description: Job pending
+  /api/v1/admin/retention:
+    post:
+      summary: Delete expired assistant messages for this tenant
+      responses:
+        "200":
+          description: Deletion count
+  /api/v1/metrics:
+    get:
+      summary: Process counters for administrators
+      responses:
+        "200":
+          description: Metrics
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: finguard_session
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code: {type: string}
+            message: {type: string}
+            request_id: {type: string}
