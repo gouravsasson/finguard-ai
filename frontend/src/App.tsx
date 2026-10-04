@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import {
   Link,
   Navigate,
@@ -8,29 +8,34 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import { api, User } from "./api";
-import { CaseWorkspace } from "./pages/CaseWorkspace";
-import { Dashboard } from "./pages/Dashboard";
 import { Brand, Icon } from "./components/Icon";
 import { Landing } from "./pages/Landing";
 import { Login } from "./pages/Login";
+import { Dashboard } from "./pages/Dashboard";
+import { CaseLayout } from "./pages/case/CaseLayout";
+import { SignalsPage } from "./pages/case/SignalsPage";
+import { EvidencePage } from "./pages/case/EvidencePage";
+import { KnockoutsPage } from "./pages/case/KnockoutsPage";
+import { TransactionsPage } from "./pages/case/TransactionsPage";
+import { ReportPage } from "./pages/case/ReportPage";
+import { GraphPage } from "./pages/case/GraphPage";
+import { AskPage } from "./pages/case/AskPage";
+import { DecisionPage } from "./pages/case/DecisionPage";
+import { NotesPage } from "./pages/case/NotesPage";
+import { AuditPage } from "./pages/case/AuditPage";
+import { useLogout, useSession } from "@/lib/api/hooks";
+import { useSessionStore } from "@/store/session";
 
 export function App() {
-  const [user, setUser] = useState<User | null>(null);
-  const [ready, setReady] = useState(false);
+  const session = useSession();
+  const user = useSessionStore((s) => s.user) ?? session.data ?? null;
+  const ready = !session.isPending;
   const navigate = useNavigate();
   const location = useLocation();
+  const logout = useLogout();
 
-  useEffect(() => {
-    api<{ user: User }>("/api/v1/auth/me")
-      .then((res) => setUser(res.user))
-      .catch(() => setUser(null))
-      .finally(() => setReady(true));
-  }, []);
-
-  async function logout() {
-    await api("/api/v1/auth/logout", { method: "POST" });
-    setUser(null);
+  async function signOut() {
+    await logout.mutateAsync();
     navigate("/login");
   }
 
@@ -42,7 +47,7 @@ export function App() {
         </main>
       );
     return user ? (
-      <Shell user={user} onLogout={logout}>
+      <Shell user={user} onLogout={signOut}>
         {node}
       </Shell>
     ) : (
@@ -66,16 +71,24 @@ export function App() {
             ) : user ? (
               <Navigate to="/workspace" replace />
             ) : (
-              <Login onLogin={setUser} />
+              <Login />
             )
           }
         />
         <Route path="/" element={<Landing signedIn={!!user} />} />
         <Route path="/workspace" element={protect(<Dashboard />)} />
-        <Route
-          path="/cases/:id"
-          element={protect(<CaseWorkspace role={user?.role || "viewer"} />)}
-        />
+        <Route path="/cases/:id" element={protect(<CaseLayout />)}>
+          <Route index element={<SignalsPage />} />
+          <Route path="evidence" element={<EvidencePage />} />
+          <Route path="knockouts" element={<KnockoutsPage />} />
+          <Route path="transactions" element={<TransactionsPage />} />
+          <Route path="report" element={<ReportPage />} />
+          <Route path="graph" element={<GraphPage />} />
+          <Route path="ask" element={<AskPage />} />
+          <Route path="decision" element={<DecisionPage />} />
+          <Route path="notes" element={<NotesPage />} />
+          <Route path="audit" element={<AuditPage />} />
+        </Route>
         <Route
           path="*"
           element={protect(
@@ -90,12 +103,30 @@ export function App() {
   );
 }
 
+const caseSections: Record<string, string> = {
+  evidence: "Evidence",
+  knockouts: "Knockout desk",
+  transactions: "Transactions",
+  report: "Draft report",
+  graph: "Observed graph",
+  ask: "Ask",
+  decision: "Decision",
+  notes: "Notes",
+  audit: "Audit",
+};
+
+function crumb(pathname: string) {
+  if (!pathname.startsWith("/cases/")) return "Case queue";
+  const section = pathname.split("/")[3];
+  return section ? caseSections[section] || "Case" : "Signals";
+}
+
 function Shell({
   user,
   onLogout,
   children,
 }: {
-  user: User;
+  user: { name: string; role: string };
   onLogout: () => Promise<void>;
   children: ReactNode;
 }) {
@@ -103,7 +134,7 @@ function Shell({
   const [logoutError, setLogoutError] = useState("");
   const [signingOut, setSigningOut] = useState(false);
   return (
-    <div className="shell">
+    <div className="shell desk">
       <aside className="rail">
         <Link to="/" className="brand-link" aria-label="FinGuard home">
           <Brand />
@@ -161,11 +192,7 @@ function Shell({
         <header className="topbar">
           <div className="breadcrumb">
             Workspace <span>/</span>{" "}
-            <strong>
-              {location.pathname.startsWith("/cases/")
-                ? "Case investigation"
-                : "Case queue"}
-            </strong>
+            <strong>{crumb(location.pathname)}</strong>
           </div>
           <span className="environment">
             <span /> Demo environment

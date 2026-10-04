@@ -1835,3 +1835,19 @@ textarea::placeholder {
 .search-field input {
   color: var(--ink);
 }
+body.market-home {
+  overflow: hidden;
+  background: #fff;
+}
+body.market-home .skip {
+  display: none;
+}
+.market-frame {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  border: 0;
+  z-index: 5;
+  background: #fff;
+}

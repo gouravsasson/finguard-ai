@@ -1,0 +1,325 @@
+.shell.desk,
+.shell.desk .workspace,
+.shell.desk .main {
+  background: #fff;
+  color: #000;
+  font-family: Outfit, "Segoe UI", "Helvetica Neue", sans-serif;
+  font-weight: 400;
+}
+
+.shell.desk .rail {
+  background: #fff;
+  color: #000;
+  border-right: 1px solid #e6e6e6;
+  box-shadow: none;
+}
+
+.shell.desk .rail .brand,
+.shell.desk .rail nav a,
+.shell.desk .who strong {
+  color: #000;
+  font-weight: 400;
+}
+
+.shell.desk .brand-mark {
+  color: #000;
+}
+
+.shell.desk .rail nav a:hover,
+.shell.desk .rail nav a[aria-current="page"] {
+  background: rgba(177, 84, 249, 0.1);
+  color: #000;
+  border-color: transparent;
+  box-shadow: inset 2px 0 #b154f9;
+}
+
+.shell.desk .workspace-avatar,
+.shell.desk .avatar {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+  border-radius: 50%;
+}
+
+.shell.desk .topbar,
+.shell.desk .workspace-footer {
+  background: #fff;
+  border-color: #e6e6e6;
+  box-shadow: none;
+  color: #6c6b6b;
+}
+
+.shell.desk .environment {
+  background: transparent;
+  border: 0;
+  color: #6c6b6b;
+}
+
+.shell.desk .logout {
+  width: auto;
+  min-height: 0;
+  padding: 8px;
+  background: transparent;
+  color: #000;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+}
+
+.shell.desk .logout:hover {
+  background: rgba(177, 84, 249, 0.1);
+  border-color: #b154f9;
+  color: #000;
+}
+
+.case-page {
+  width: 100%;
+  max-width: none;
+}
+
+.case-page h1,
+.case-page h2,
+.case-page h3 {
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+
+.case-page h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.case-page h2 {
+  margin: 0 0 12px;
+  font-size: 24px;
+}
+
+.case-page p,
+.case-page li {
+  color: #171717;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.case-page .muted,
+.case-page .case-banner {
+  color: #6c6b6b;
+}
+
+.case-page .back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  color: #000;
+  text-decoration: none;
+}
+
+.case-page .case-banner {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.case-page .case-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.case-page .case-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.case-page .case-stats > div {
+  padding: 14px 16px;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.case-page .case-stats span,
+.case-page .case-stats small {
+  display: block;
+  color: #6c6b6b;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.case-page .case-stats strong {
+  display: block;
+  margin-top: 6px;
+  color: #000;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.case-page .case-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 8px 0 24px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.case-page .case-nav a {
+  padding: 8px 0;
+  color: #6c6b6b;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+}
+
+.case-page .case-nav a:hover,
+.case-page .case-nav a[aria-current="page"] {
+  color: #000;
+  background: transparent;
+  border-bottom-color: #b154f9;
+}
+
+.case-page .case-section {
+  padding: 8px 0 24px;
+}
+
+.case-page .claim,
+.case-page .case-section article {
+  margin: 0 0 12px;
+  padding: 16px;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: none;
+}
+
+.case-page .signal-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.case-page .signal-values span {
+  display: block;
+  color: #6c6b6b;
+  font-size: 13px;
+}
+
+.case-page button {
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 12px 16px;
+  background: #b154f9;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.case-page button:hover {
+  background: #8d31d3;
+  color: #fff;
+}
+
+.case-page button.secondary {
+  background: transparent;
+  color: #000;
+  border: 1px solid #b154f9;
+}
+
+.case-page button.secondary:hover {
+  background: rgba(177, 84, 249, 0.1);
+  color: #000;
+}
+
+.case-page a.chip {
+  display: inline-flex;
+  margin: 6px 6px 0 0;
+  padding: 6px 10px;
+  background: #fff;
+  color: #000;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.case-page a.chip:hover {
+  border-color: #b154f9;
+  background: rgba(177, 84, 249, 0.1);
+}
+
+.case-page input,
+.case-page textarea {
+  width: 100%;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.case-page textarea {
+  min-height: 120px;
+}
+
+.case-page input:focus,
+.case-page textarea:focus {
+  border-color: #b154f9;
+  outline: none;
+}
+
+.case-page .tag {
+  border-radius: 10px;
+  font-weight: 400;
+}
+
+.case-page .graph {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.case-page .graph svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  max-width: none;
+  background: transparent;
+  border: 0;
+}
+
+.case-page article.target {
+  border-color: #b154f9;
+}
+
+@media (max-width: 800px) {
+  .case-page .case-stats,
+  .case-page .signal-values {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .case-page h1 {
+    font-size: 28px;
+  }
+
+  .case-page .case-stats,
+  .case-page .signal-values {
+    grid-template-columns: 1fr;
+  }
+}

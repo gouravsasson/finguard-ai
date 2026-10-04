@@ -1,0 +1,22 @@
+---
+description: What not to do when redesigning FinGuard UI. Bias corrector from signs-of-ai-design.
+globs: frontend/**/*.{tsx,css}
+alwaysApply: false
+---
+
+# UI redesign
+
+When changing layout, CSS, or components, follow `docs/UI_REDESIGN_AGENT.md`.
+
+That file is the agent brief adapted from [febbhav/signs-of-ai-design](https://github.com/febbhav/signs-of-ai-design) (`design-rules.md` and Part I). Patterns there are allowed when chosen on purpose. They are not allowed as a stack of defaults.
+
+Before shipping a visual change:
+
+- Do not reach for an indigo or purple gradient, cream-page fallback, emerald accent, gradient text, or neon glow on black.
+- Do not leave Inter, Geist, or Space Grotesk unchosen, and do not add an italic serif hero to the case desk.
+- Do not build the centered pill-hero plus exactly three icon cards. A bento grid is the same reflex.
+- Do not put `rounded-2xl` and a heavy shadow on everything, nest cards, or add glass blur with nothing underneath.
+- Do not use emoji as icons, fade every section up on scroll, or invent logos, stats, or testimonials.
+- Do not turn the investigation desk into a marketing page, add a fraud score, or add freeze or money-movement controls.
+
+One match is noise. Many unchosen defaults together is the tell. State the decision when you keep one of these patterns.

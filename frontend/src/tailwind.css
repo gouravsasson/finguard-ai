@@ -1,0 +1,89 @@
+/*
+  Tailwind is loaded WITHOUT preflight on purpose. The desk already ships
+  hand-written CSS (styles.css, refinement.css, theme.css, landing.css) that
+  styles bare elements. Preflight would reset those and flatten the workspace,
+  so only the theme and utility layers are imported.
+
+  Utilities are class selectors, so they outrank the existing element rules
+  (`button { ... }`) without needing !important.
+*/
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/*
+  shadcn/ui tokens. Raw values are prefixed --ui- so they cannot collide with
+  the desk's existing --bg / --ink / --line / --green variables.
+*/
+:root {
+  --ui-background: #ffffff;
+  --ui-foreground: #1c1d1b;
+  --ui-card: #ffffff;
+  --ui-card-foreground: #1c1d1b;
+  --ui-popover: #ffffff;
+  --ui-popover-foreground: #1c1d1b;
+  --ui-primary: #16324f;
+  --ui-primary-foreground: #ffffff;
+  --ui-secondary: #f1f4f7;
+  --ui-secondary-foreground: #16324f;
+  --ui-muted: #f4f6f8;
+  --ui-muted-foreground: #5b6670;
+  --ui-accent: #eef2f6;
+  --ui-accent-foreground: #16324f;
+  --ui-destructive: #9a3412;
+  --ui-destructive-foreground: #ffffff;
+  --ui-success: #1c3d34;
+  --ui-warning: #7a5c10;
+  --ui-border: #dce3e7;
+  --ui-input: #dce3e7;
+  --ui-ring: #16324f;
+  --ui-radius: 8px;
+}
+
+@theme inline {
+  --color-background: var(--ui-background);
+  --color-foreground: var(--ui-foreground);
+  --color-card: var(--ui-card);
+  --color-card-foreground: var(--ui-card-foreground);
+  --color-popover: var(--ui-popover);
+  --color-popover-foreground: var(--ui-popover-foreground);
+  --color-primary: var(--ui-primary);
+  --color-primary-foreground: var(--ui-primary-foreground);
+  --color-secondary: var(--ui-secondary);
+  --color-secondary-foreground: var(--ui-secondary-foreground);
+  --color-muted: var(--ui-muted);
+  --color-muted-foreground: var(--ui-muted-foreground);
+  --color-accent: var(--ui-accent);
+  --color-accent-foreground: var(--ui-accent-foreground);
+  --color-destructive: var(--ui-destructive);
+  --color-destructive-foreground: var(--ui-destructive-foreground);
+  --color-success: var(--ui-success);
+  --color-warning: var(--ui-warning);
+  --color-border: var(--ui-border);
+  --color-input: var(--ui-input);
+  --color-ring: var(--ui-ring);
+
+  --radius-sm: calc(var(--ui-radius) - 4px);
+  --radius-md: calc(var(--ui-radius) - 2px);
+  --radius-lg: var(--ui-radius);
+  --radius-xl: calc(var(--ui-radius) + 4px);
+}
+
+@keyframes ui-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="dialog-content"],
+  [data-slot="dropdown-menu-content"],
+  [data-slot="select-content"] {
+    animation: none;
+  }
+}

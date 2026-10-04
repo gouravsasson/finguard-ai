@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { api, CaseRow } from "../api";
 import { Icon } from "../components/Icon";
+import { DeskOps } from "../components/DeskOps";
+import { qk } from "@/lib/api/keys";
+import { useCaseQueue, useDashboard, useMeta } from "@/lib/api/hooks";
+import { useUiStore } from "@/store/ui";
 
-type Dash = {
-  counts: Record<string, number>;
-  cases: CaseRow[];
-  queue_depth: number;
-  meta: { limitations: string[]; ai_provider: string; ai_live: boolean };
-};
 const statuses = [
   "all",
   "open",
@@ -25,68 +22,29 @@ const labels: Record<string, string> = {
   resolved: "Resolved",
   closed: "Closed",
 };
+
 export function Dashboard() {
-  const [data, setData] = useState<Dash | null>(null);
-  const [error, setError] = useState("");
-  const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("all");
-  const [priority, setPriority] = useState("all");
-  const [cursor, setCursor] = useState("");
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  async function load() {
-    setRefreshing(true);
-    setError("");
-    try {
-      const [summary, queue] = await Promise.all([
-        api<Dash>("/api/v1/dashboard"),
-        api<{ data: CaseRow[]; page: { next_cursor: string } }>(
-          "/api/v1/cases?limit=25",
-        ),
-      ]);
-      setData({ ...summary, cases: queue.data || [] });
-      setCursor(queue.page.next_cursor);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unable to load cases.");
-    } finally {
-      setRefreshing(false);
-    }
-  }
-  async function loadMore() {
-    setLoadingMore(true);
-    setError("");
-    try {
-      const queue = await api<{
-        data: CaseRow[];
-        page: { next_cursor: string };
-      }>(`/api/v1/cases?limit=25&cursor=${encodeURIComponent(cursor)}`);
-      setData((current) =>
-        current
-          ? {
-              ...current,
-              cases: [
-                ...current.cases,
-                ...queue.data.filter(
-                  (row) => !current.cases.some((c) => c.id === row.id),
-                ),
-              ],
-            }
-          : current,
-      );
-      setCursor(queue.page.next_cursor);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Unable to load more cases.",
-      );
-    } finally {
-      setLoadingMore(false);
-    }
-  }
-  useEffect(() => {
-    void load();
-  }, []);
-  const counts = data?.counts || {};
-  const cases = (data?.cases || []).filter(
+  const summary = useDashboard();
+  const meta = useMeta();
+  const queue = useCaseQueue({ limit: 25 });
+  const client = useQueryClient();
+  const { status, search, priority } = useUiStore((s) => s.queue);
+  const setStatus = useUiStore((s) => s.setQueueStatus);
+  const setSearch = useUiStore((s) => s.setQueueSearch);
+  const setPriority = useUiStore((s) => s.setQueuePriority);
+  const clearFilters = useUiStore((s) => s.clearQueueFilters);
+
+  const data = summary.data;
+  const loaded = queue.data?.pages.flatMap((page) => page.data) ?? [];
+  const error =
+    summary.error?.message ||
+    queue.error?.message ||
+    (summary.isError || queue.isError ? "Unable to load cases." : "");
+  const refreshing = summary.isFetching || queue.isFetching;
+  const loadingMore = queue.isFetchingNextPage;
+  const cursor = queue.hasNextPage;
+
+  const cases = loaded.filter(
     (item) =>
       (status === "all" || item.status === status) &&
       (priority === "all" || item.priority === priority) &&
@@ -94,12 +52,21 @@ export function Dashboard() {
         .toLowerCase()
         .includes(search.toLowerCase()),
   );
+  const counts = data?.counts || {};
   const metrics = [
     { key: "open", icon: "folder", note: "Awaiting investigation" },
     { key: "in_review", icon: "eye", note: "Under active review" },
     { key: "escalated", icon: "alert", note: "Requires senior attention" },
     { key: "resolved", icon: "check", note: "Review completed" },
   ] as const;
+
+  async function refresh() {
+    await Promise.all([
+      client.invalidateQueries({ queryKey: qk.dashboard }),
+      client.invalidateQueries({ queryKey: ["cases"] }),
+    ]);
+  }
+
   return (
     <>
       <div className="page-heading">
@@ -113,16 +80,16 @@ export function Dashboard() {
         <button
           className="secondary"
           disabled={refreshing || loadingMore}
-          onClick={load}
+          onClick={() => void refresh()}
         >
           <Icon name="refresh" size={16} />
-          {refreshing ? "Refreshing…" : "Refresh queue"}
+          {refreshing && loaded.length > 0 ? "Refreshing…" : "Refresh queue"}
         </button>
       </div>
       {error && (
         <p className="error" role="alert">
           {error}{" "}
-          <button className="secondary" onClick={load}>
+          <button className="secondary" onClick={() => void refresh()}>
             Try again
           </button>
         </p>
@@ -184,10 +151,10 @@ export function Dashboard() {
           </span>
         </p>
         <span className="context-mode">
-          {data
-            ? data.meta.ai_live
+          {(meta.data || data?.meta)
+            ? (meta.data || data!.meta).ai_live
               ? "Live Gemini"
-              : `${data.meta.ai_provider} · Not live`
+              : `${(meta.data || data!.meta).ai_provider} · Not live`
             : "Loading model status…"}
         </span>
       </div>
@@ -196,7 +163,7 @@ export function Dashboard() {
           <div>
             <h2 id="queue-title">
               Investigation queue{" "}
-              <span className="count">{data?.cases.length ?? "—"}</span>
+              <span className="count">{loaded.length || "—"}</span>
             </h2>
             <p className="muted">
               Search loaded cases or filter by status and triage priority.
@@ -236,7 +203,7 @@ export function Dashboard() {
               onChange={(e) => setPriority(e.target.value)}
             >
               <option value="all">All priorities</option>
-              {Array.from(new Set((data?.cases || []).map((c) => c.priority)))
+              {Array.from(new Set(loaded.map((c) => c.priority)))
                 .sort()
                 .map((p) => (
                   <option key={p} value={p}>
@@ -246,7 +213,7 @@ export function Dashboard() {
             </select>
           </div>
         </div>
-        {!data && !error ? (
+        {!data && !error && queue.isPending ? (
           <div className="empty-state" role="status">
             <Icon name="clock" size={28} />
             <h3>Loading your workspace</h3>
@@ -261,22 +228,15 @@ export function Dashboard() {
           <div className="empty-state">
             <Icon name="folder" size={32} />
             <h3>
-              {data?.cases.length ? "No matching cases" : "Your queue is clear"}
+              {loaded.length ? "No matching cases" : "Your queue is clear"}
             </h3>
             <p>
-              {data?.cases.length
+              {loaded.length
                 ? "Try another search or adjust your filters."
                 : "Cases will appear here when synthetic activity triggers a signal."}
             </p>
             {(search || status !== "all" || priority !== "all") && (
-              <button
-                className="secondary"
-                onClick={() => {
-                  setSearch("");
-                  setStatus("all");
-                  setPriority("all");
-                }}
-              >
+              <button className="secondary" onClick={clearFilters}>
                 Clear filters
               </button>
             )}
@@ -312,7 +272,9 @@ export function Dashboard() {
                     </td>
                     <td>
                       <span className={`priority ${item.priority}`}>
-                        {item.signal_count} {item.signal_count === 1 ? "signal" : "signals"} · {item.priority}
+                        {item.signal_count}{" "}
+                        {item.signal_count === 1 ? "signal" : "signals"} ·{" "}
+                        {item.priority}
                       </span>
                     </td>
                     <td>
@@ -353,7 +315,7 @@ export function Dashboard() {
             <button
               className="secondary"
               disabled={loadingMore || refreshing}
-              onClick={loadMore}
+              onClick={() => void queue.fetchNextPage()}
             >
               {loadingMore ? "Loading…" : "Load more cases"}
             </button>
@@ -362,17 +324,17 @@ export function Dashboard() {
         )}
         <div className="table-footer">
           <span>
-            Showing {cases.length} of {data?.cases.length ?? 0} loaded cases
+            Showing {cases.length} of {loaded.length} loaded cases
           </span>
-          <span>
-            Synthetic records only
-          </span>
+          <span>Synthetic records only</span>
         </div>
       </section>
+      <DeskOps />
       <div className="desk-note">
         <Icon name="spark" size={18} />
         <p>
-          {data?.meta.limitations[0] ||
+          {meta.data?.limitations[0] ||
+            data?.meta.limitations[0] ||
             "Synthetic demonstration data only."}
         </p>
       </div>
