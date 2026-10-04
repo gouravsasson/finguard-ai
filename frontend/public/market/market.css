@@ -736,9 +736,29 @@ ul { margin: 0; padding: 0; list-style: none; }
   }
 }
 @media (max-width: 999px) {
-  .card { margin: 0 auto 1rem; min-height: 0; }
+  .stack { height: auto; padding-bottom: 2rem; }
+  .stack-sticky {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    height: auto;
+    overflow: visible;
+    gap: 1rem;
+  }
+  .card {
+    position: static;
+    width: calc(100% - var(--pad) * 2);
+    margin: 0 auto;
+    min-height: 0;
+    flex: none;
+    transform: none !important;
+  }
+  .card-media { transform: none !important; opacity: 1 !important; }
   .card-copy p { max-width: none; }
-  .stack { padding-bottom: 4rem; }
+  .chapter-head { padding: 5rem var(--pad) 1.25rem; gap: 1rem; }
+  .chapter-intro { padding: 0.5rem var(--pad) 2rem; }
   .t-display { font-size: 56px; }
   .t-hero, .chapter-intro p, .t-integr { font-size: 36px; }
   .t-faq, .t-foot, .t-ess { font-size: 32px; }
@@ -1050,15 +1070,21 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 999px) {
   .integr-title { margin-left: var(--pad); width: auto; }
   .ess { grid-template-columns: 1fr; }
-  .ess h3 { font-size: 32px; }
+  .ess h3 { font-size: 32px; white-space: normal; }
   .band-inner { flex-direction: column; align-items: flex-start; border-radius: 14px; padding: 1.5rem 1rem; }
   .footer-top, .footer-cols { grid-template-columns: 1fr; }
   .footer-art { min-height: 180px; }
-  .cookie { max-width: none; }
+  .cookie { max-width: none; left: var(--pad); right: var(--pad); width: auto; transform: translateY(150%); }
+  .cookie.is-in { transform: translateY(0); }
   .cookie-inner { flex-direction: column; align-items: flex-start; padding: 1.5rem; }
-  .faq-q { padding: 2rem 1.5rem; font-size: 18px; }
-  .faq-a p { padding: 0 1.5rem 2rem; }
+  .faq-q { padding: 1.5rem 1rem; font-size: 18px; }
+  .faq-a p { padding: 0 1rem 1.5rem; }
   .copy { margin-left: 0; }
+  .hero .tile, .hero .sphere { display: none; }
+  .t-display { font-size: 44px; }
+  .hero h1 { font-size: 32px; }
+  img, svg, video { max-width: 100%; }
+  body { overflow-x: clip; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1390,6 +1390,28 @@
   }
 }
 
+@media (max-width: 640px) {
+  .login-layout.login-layout {
+    overflow-x: clip;
+  }
+
+  .login-layout .login-story,
+  .login-layout .login-panel {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .login-layout .login-story h1,
+  .login-layout .login-form h2 {
+    font-size: 28px;
+  }
+
+  .login-layout .role-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing .product-frame img,
   .landing .hero-photo img,
