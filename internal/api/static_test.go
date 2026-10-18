@@ -19,6 +19,18 @@ func TestSPARoutesDoNotRedirect(t *testing.T) {
 		})
 	}
 }
+func TestMarketPageIsNotTheSignInApp(t *testing.T) {
+	s := &Server{}
+	res := httptest.NewRecorder()
+	s.static(res, httptest.NewRequest(http.MethodGet, "/market/index.html?brand=mark", nil))
+	if res.Code == http.StatusNotFound {
+		t.Skip("market page is copied into the image by the frontend build")
+	}
+	if res.Code != http.StatusOK || res.Header().Get("Location") != "" || strings.Contains(res.Body.String(), `<div id="root">`) {
+		t.Fatalf("market page: status=%d location=%q", res.Code, res.Header().Get("Location"))
+	}
+}
+
 func TestMissingAssetsAreNotHTML(t *testing.T) {
 	s := &Server{}
 	for _, path := range []string{"/assets/missing.js", "/images/missing.jpg"} {

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FinGuard — Financial investigation, with context</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./market.css" />
+</head>
+<body class="is-enter">
+  <header class="nav is-top" id="nav">
+    <div class="nav-desktop">
+      <div class="nav-row">
+        <a class="logo" href="#top" aria-label="FinGuard home">
+          <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="logo-name">FinGuard</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary">
+          <div class="nav-item"><a class="nav-link" href="#queue">The platform</a></div>
+          <div class="nav-item"><a class="nav-link" href="#casefile">How it works</a></div>
+          <div class="nav-item">
+            <button class="nav-drop-label" type="button">Our approach
+              <svg class="nav-caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+            </button>
+            <div class="nav-menu"><ul>
+              <li><a href="#graph">Relationships</a></li>
+              <li><a href="#principles">Limits</a></li>
+              <li><a href="#faq">Questions</a></li>
+            </ul></div>
+          </div>
+        </nav>
+        <div class="nav-right">
+          <a class="nav-login" href="/login" target="_top">Sign in</a>
+          <a class="btn btn-line nav-cta" href="/login" target="_top">Open demo</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-mobile">
+      <div class="nav-mobile-row">
+        <a class="logo" href="#top" aria-label="FinGuard home">
+          <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="logo-name">FinGuard</span>
+        </a>
+        <div class="nav-mobile-actions">
+          <a class="btn btn-black nav-mobile-cta" href="/login" target="_top">Open demo</a>
+          <button class="burger" id="burger" type="button" aria-label="Toggle menu" aria-expanded="false">
+            <span class="burger-lines"><span></span><span></span><span></span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="sheet" id="sheet">
+    <div class="sheet-group">
+      <a href="#queue">The platform</a>
+      <a href="#casefile">How it works</a>
+      <a href="#graph">Relationships</a>
+    </div>
+    <div class="sheet-group">
+      <span class="sheet-label">Our approach</span>
+      <a href="#principles">Limits</a>
+      <a href="#faq">Questions</a>
+      <a href="/login" target="_top">Sign in</a>
+    </div>
+  </div>
+
+  <main id="top">
+    <section class="hero" id="hero">
+      <div class="hero-scene" aria-hidden="true">
+        <div class="obj cylinder">
+          <div class="cyl-shell">
+            <div class="cyl-hole"><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <div class="obj tile tile-green"></div>
+        <div class="obj tile tile-purple">S</div>
+        <div class="obj tile tile-yellow"></div>
+        <div class="obj tile tile-slack"></div>
+        <div class="obj sphere"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-kicker-wrap">
+          <h2 class="t-kicker hero-kicker">Synthetic records. A person still decides.</h2>
+        </div>
+        <div class="hero-bottom">
+          <h1 class="t-hero">Every signal stays with the record.</h1>
+          <div class="hero-aside">
+            <p class="t-small">Open a case, read the rule threshold, and check the source record before anyone writes a decision. The desk does not freeze accounts or move money.</p>
+            <a class="btn btn-fill" href="/login" target="_top">Open demo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter-light" id="queue" data-theme="light">
+      <header class="chapter-head">
+        <div class="chapter-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke-width="1.6">
+            <rect x="8" y="8" width="12" height="8" rx="2"/>
+            <rect x="28" y="20" width="12" height="8" rx="2"/>
+            <rect x="8" y="32" width="12" height="8" rx="2"/>
+            <path d="M20 12h6a4 4 0 0 1 4 4v8M20 36h6a4 4 0 0 0 4-4v-4"/>
+          </svg>
+        </div>
+        <h2 class="t-display">Queue</h2>
+      </header>
+      <div class="chapter-intro">
+        <p>Keep open work, priorities, and account search <em class="em-flow">in one list.</em></p>
+      </div>
+      <div class="stack" data-stack>
+        <div class="stack-sticky">
+          <article class="card">
+            <div class="card-copy">
+              <h3 class="t-card">Open work</h3>
+              <p class="t-body">Keep the team’s open cases in view. Search accounts, filter priorities, and move directly into an investigation.</p>
+            </div>
+            <div class="card-media wash-flow">
+              <div class="card-shot"><img src="/images/workspace-preview.png" alt="FinGuard case queue with priorities, review status, and account search" /></div>
+            </div>
+          </article>
+          <article class="card is-invert">
+            <div class="card-copy">
+              <h3 class="t-card">Priorities</h3>
+              <p class="t-body">Each case shows why it is in the queue. The band is a sort for the desk, not a fraud score and not a guilt label.</p>
+            </div>
+            <div class="card-media wash-flow">
+              <div class="card-shot"><img src="/images/dummy-queue.jpg" alt="People working at a table, used as a quiet stand-in beside the queue" /></div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-copy">
+              <h3 class="t-card">Account search</h3>
+              <p class="t-body">Find a synthetic account and open its file. The demo queue starts at acct_demo. Nothing here is a customer record.</p>
+            </div>
+            <div class="card-media wash-flow">
+              <div class="card-shot"><img src="/images/dummy-signal.jpg" alt="Analytics on a laptop, used beside the account search" /></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter-dark" id="casefile" data-theme="dark">
+      <header class="chapter-head">
+        <div class="chapter-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke-width="1.6">
+            <path d="M8 20 L24 10 L40 20 V38 H8 Z"/>
+            <path d="M20 38 V26 H28 V38"/>
+          </svg>
+        </div>
+        <h2 class="t-display">Case file</h2>
+      </header>
+      <div class="chapter-intro">
+        <p>Read each signal next to <em class="em-store">the record that produced it.</em></p>
+      </div>
+      <div class="stack" data-stack>
+        <div class="stack-sticky">
+          <article class="card is-invert">
+            <div class="card-copy">
+              <h3 class="t-card">Read the signal</h3>
+              <p class="t-body">Each rule shows its threshold next to the value that fired it. The finding stays attached to the source record.</p>
+            </div>
+            <div class="card-media wash-store">
+              <div class="card-shot"><img src="/images/case-preview.png" alt="FinGuard case file with a signal shown beside its source record" /></div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-copy">
+              <h3 class="t-card">Follow the evidence</h3>
+              <p class="t-body">Transactions and source records sit in the same file. A claim that cannot point at evidence does not get presented as fact.</p>
+            </div>
+            <div class="card-media wash-store">
+              <div class="card-shot"><img src="/images/dummy-evidence.jpg" alt="Notes on paper, used beside the evidence view" /></div>
+            </div>
+          </article>
+          <article class="card is-invert">
+            <div class="card-copy">
+              <h3 class="t-card">Write the decision</h3>
+              <p class="t-body">Notes, escalation, and resolve all ask for a rationale. Resolve on this desk means no adverse action. The model does not decide.</p>
+            </div>
+            <div class="card-media wash-store">
+              <div class="card-shot"><img src="/images/case-preview.png" alt="FinGuard case file used while recording a human decision" /></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter-light" id="graph" data-theme="light">
+      <header class="chapter-head">
+        <div class="chapter-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none" stroke-width="1.6">
+            <path d="M8 34 V22 M18 34 V14 M28 34 V18 M38 34 V10"/>
+          </svg>
+        </div>
+        <h2 class="t-display">Graph</h2>
+      </header>
+      <div class="chapter-intro">
+        <p>Recorded links give context. <em class="em-dash">They do not establish identity.</em></p>
+      </div>
+      <div class="stack" data-stack>
+        <div class="stack-sticky">
+          <article class="card">
+            <div class="card-copy">
+              <h3 class="t-card">Observed links</h3>
+              <p class="t-body">Accounts, transactions, merchants, devices, and locations appear only where the synthetic data recorded a link.</p>
+            </div>
+            <div class="card-media wash-dash">
+              <div class="card-shot"><img src="/images/relationships-preview.png" alt="FinGuard observed relationship graph connecting accounts, transactions, merchants, devices, and locations" /></div>
+            </div>
+          </article>
+          <article class="card is-invert">
+            <div class="card-copy">
+              <h3 class="t-card">Replay a rule</h3>
+              <p class="t-body">The knockout desk replays the same rules under a hypothetical edit. The ledger does not change. A cleared replay is not proof the activity was legitimate.</p>
+            </div>
+            <div class="card-media wash-dash">
+              <div class="card-shot"><img src="/images/dummy-graph.jpg" alt="Network cables, used beside the rule replay" /></div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-copy">
+              <h3 class="t-card">A person decides</h3>
+              <p class="t-body">The assistant can point at gaps in the file. It cannot freeze an account, move money, or close the case. Role permissions decide who can write.</p>
+            </div>
+            <div class="card-media wash-dash">
+              <div class="card-shot"><img src="/images/relationships-preview.png" alt="FinGuard relationship graph shown beside the human decision" /></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="integr" id="principles">
+      <h2 class="t-integr integr-title">Traceable evidence, explainable signals, and a human decision.</h2>
+      <div class="marquee" id="marquee">
+        <div class="marquee-track" id="marqueeTrack"></div>
+      </div>
+      <div class="ess">
+        <h3>Traceable evidence</h3>
+        <h3>Explainable signals</h3>
+        <h3>Human decisions</h3>
+        <h3>Audit trail</h3>
+        <h3>Role permissions</h3>
+        <h3>Knockout replay</h3>
+        <h3>Source records</h3>
+        <h3>Synthetic demo</h3>
+        <h3>No money movement</h3>
+        <h3>No account freeze</h3>
+      </div>
+    </section>
+
+    <section class="band" id="pricing">
+      <div class="band-inner">
+        <p class="t-24">Open the queue and start with acct_demo.</p>
+        <a class="btn btn-white" href="/login" target="_top">Enter the demo</a>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="faq-inner">
+        <h2 class="t-faq">Frequently Asked Questions</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q" type="button">Does resolving a case freeze an account?
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner"><p>No. Resolve on this desk is recorded as no adverse action. The workspace does not freeze accounts, move money, or send a decision to a bank.
+
+The file keeps the rationale and the audit trail. That is the whole action.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">Where does a signal come from?
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner"><p>A versioned rule compares a threshold with a value in the synthetic ledger. The case file shows both, next to the source record.
+
+If a claim cannot point at an evidence id, the desk does not treat it as established.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">Is this real customer data?
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner"><p>No. Northwind is a synthetic tenant. Accounts, transactions, and relationships were generated for the demo.
+
+Demo access is included. There is no production bank behind the queue.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">Who can write a decision?
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner"><p>An investigator can read and draft. A senior investigator can escalate and resolve. A viewer can read and cannot write.
+
+Significant decisions require a rationale and are recorded with the person who made them.</p></div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" type="button">What does the relationship graph prove?
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner"><p>It shows links the synthetic data recorded. A shared device or a repeated merchant is context, not an identity finding.
+
+Triage bands are not fraud probabilities. The graph does not decide the case.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="footer-top">
+      <div>
+        <a class="logo" href="#top" aria-label="FinGuard home" style="width:max(8.2rem,9vw);margin-bottom:2rem;color:#fff">
+          <span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="logo-name">FinGuard</span>
+        </a>
+        <h2 class="t-foot">Open the queue and start with the record.</h2>
+        <div class="footer-actions">
+          <a class="btn btn-fill" href="/login" target="_top">Open demo</a>
+          <a class="btn btn-line-on-dark" href="/login" target="_top">Sign in</a>
+        </div>
+      </div>
+      <div class="footer-art" id="footerArt">
+        <div class="footer-glow"></div>
+        <div class="footer-shape" aria-hidden="true"><span></span><span></span></div>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h3>Desk</h3>
+        <a href="#queue"><span>Queue</span></a><br>
+        <a href="#casefile"><span>Case file</span></a><br>
+        <a href="#graph"><span>Graph</span></a>
+      </div>
+      <div id="company">
+        <h3>Approach</h3>
+        <a href="#principles"><span>Limits</span></a><br>
+        <a href="#faq"><span>Questions</span></a><br>
+        <a href="#casefile"><span>How it works</span></a>
+      </div>
+      <div id="resources">
+        <h3>Access</h3>
+        <a href="/login" target="_top"><span>Sign in</span></a><br>
+        <a href="/login" target="_top"><span>Open demo</span></a><br>
+        <a href="/workspace" target="_top"><span>Workspace</span></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-contact">
+        <a href="/login" target="_top">Synthetic investigation desk</a>
+        <a href="/login" target="_top">Sign in</a>
+      </div>
+      <p class="copy t-small">© 2026 FinGuard · Synthetic-data demonstrator</p>
+    </div>
+  </footer>
+
+  <nav class="side" id="side" aria-label="Chapters">
+    <a href="#queue">Queue</a>
+    <a href="#casefile">Case file</a>
+    <a href="#graph">Graph</a>
+  </nav>
+
+  <div class="cookie" id="cookie" role="dialog" aria-label="Analytics notice">
+    <div class="cookie-inner">
+      <p class="t-small" style="margin:0">This demo stores a local session only. No customer data is collected.</p>
+      <div class="cookie-actions">
+        <button class="cookie-accept" type="button" id="cookieAccept">Accept</button>
+        <button class="cookie-reject" type="button" id="cookieReject"><span>Reject</span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="./market.js"></script>
+</body>
+</html>

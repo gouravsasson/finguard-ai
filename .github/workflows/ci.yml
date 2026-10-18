@@ -1,0 +1,45 @@
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: finguard
+          POSTGRES_PASSWORD: finguard
+          POSTGRES_DB: finguard
+        ports:
+          - 54329:5432
+        options: >-
+          --health-cmd "pg_isready -U finguard -d finguard"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgres://finguard_app:finguard_app@localhost:54329/finguard?sslmode=disable
+      MIGRATE_DATABASE_URL: postgres://finguard:finguard@localhost:54329/finguard?sslmode=disable
+      TEST_DATABASE_URL: postgres://finguard_app:finguard_app@localhost:54329/finguard_test?sslmode=disable
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - name: Create application role
+        run: |
+          PGPASSWORD=finguard psql -h localhost -p 54329 -U finguard -d finguard -c "DO \$\$ BEGIN CREATE ROLE finguard_app LOGIN PASSWORD 'finguard_app'; EXCEPTION WHEN duplicate_object THEN NULL; END \$\$;"
+          PGPASSWORD=finguard psql -h localhost -p 54329 -U finguard -d finguard -c "GRANT CONNECT ON DATABASE finguard TO finguard_app;"
+      - run: go test ./...
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+        working-directory: frontend
+      - run: npm test
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend

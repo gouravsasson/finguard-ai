@@ -10,6 +10,7 @@ import (
 	"io/fs"
 	"log/slog"
 	"net/http"
+	"path"
 	"strconv"
 	"strings"
 	"time"
@@ -754,18 +755,23 @@ func (s *Server) static(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	name := strings.TrimPrefix(r.URL.Path, "/")
-	if name == "" {
+	name := strings.TrimPrefix(path.Clean("/"+r.URL.Path), "/")
+	if name == "" || name == "." {
 		name = "index.html"
 	}
-	if _, err := fs.Stat(sub, name); err != nil {
-		if strings.HasPrefix(name, "assets/") || strings.HasPrefix(name, "images/") {
+	info, err := fs.Stat(sub, name)
+	if err == nil && info.IsDir() {
+		name = strings.TrimSuffix(name, "/") + "/index.html"
+		_, err = fs.Stat(sub, name)
+	}
+	if err != nil {
+		if strings.HasPrefix(name, "assets/") || strings.HasPrefix(name, "images/") || strings.HasPrefix(name, "market/") {
 			http.NotFound(w, r)
 			return
 		}
 		name = "index.html"
 	}
-	if name == "index.html" {
+	if name == "index.html" || strings.HasSuffix(name, "/index.html") {
 		content, err := fs.ReadFile(sub, name)
 		if err != nil {
 			http.NotFound(w, r)
