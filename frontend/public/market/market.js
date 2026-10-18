@@ -64,6 +64,16 @@ function onScroll() {
         media.style.opacity = String(opacity);
       });
     });
+  } else {
+    document.querySelectorAll("[data-stack] .card").forEach((card) => {
+      card.style.transform = "";
+      card.style.zIndex = "";
+      const media = card.querySelector(".card-media");
+      if (media) {
+        media.style.transform = "";
+        media.style.opacity = "";
+      }
+    });
   }
 }
 

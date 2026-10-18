@@ -306,20 +306,189 @@
   border-color: #b154f9;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 960px) {
+  .shell.desk {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  .shell.desk .rail {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-right: 0;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .shell.desk .workspace-label,
+  .shell.desk .nav-label,
+  .shell.desk .who .avatar,
+  .shell.desk .who > div,
+  .shell.desk .nav-dot {
+    display: none;
+  }
+
+  .shell.desk .rail nav {
+    margin-left: auto;
+  }
+
+  .shell.desk .rail nav a {
+    padding: 8px 10px;
+  }
+
+  .shell.desk .rail-bottom,
+  .shell.desk .who {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .shell.desk .workspace {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .shell.desk .topbar {
+    height: auto;
+    min-height: 52px;
+    padding: 10px 16px;
+    gap: 8px;
+  }
+
+  .shell.desk .breadcrumb {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .shell.desk .main {
+    width: 100%;
+    max-width: none;
+    padding: 20px 16px 32px;
+  }
+
+  .shell.desk .page-heading,
+  .case-page .case-heading,
+  .case-page .row {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .shell.desk .filters,
+  .shell.desk .queue-controls,
+  .shell.desk .tabs,
+  .case-page .actions {
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .shell.desk .search-field,
+  .shell.desk .search-field input,
+  .shell.desk .filters select {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .shell.desk .table-scroll,
+  .case-page .table-scroll,
+  .case-page .graph {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   .case-page .case-stats,
   .case-page .signal-values {
     grid-template-columns: 1fr 1fr;
   }
+
+  .case-page .case-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 18px;
+    scrollbar-width: thin;
+  }
+
+  .case-page .case-nav a {
+    flex: none;
+    white-space: nowrap;
+  }
+
+  .case-page textarea,
+  .case-page input,
+  .shell.desk textarea,
+  .shell.desk input,
+  .shell.desk select {
+    max-width: 100%;
+  }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
+  .shell.desk .environment,
+  .shell.desk .workspace-footer span:last-child {
+    display: none;
+  }
+
+  .shell.desk .page-heading h1,
   .case-page h1 {
+    font-size: 26px;
+  }
+
+  .case-page h2 {
+    font-size: 20px;
+  }
+
+  .shell.desk .workspace-footer {
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 14px 16px;
+  }
+
+  .case-page .case-banner {
+    font-size: 14px;
+  }
+
+  .login-layout.login-layout {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .login-layout .site-header {
+    height: auto;
+    min-height: 64px;
+    padding: 12px 16px;
+  }
+
+  .login-layout .login-story h1 {
     font-size: 28px;
   }
 
+  .login-layout .login-form,
+  .login-layout .login-form button[type="submit"] {
+    max-width: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .shell.desk .main {
+    padding: 16px 12px 28px;
+  }
+
   .case-page .case-stats,
-  .case-page .signal-values {
+  .case-page .signal-values,
+  .shell.desk .stats,
+  .desk-metrics .stats {
     grid-template-columns: 1fr;
   }
 }
